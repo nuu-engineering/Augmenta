@@ -3,7 +3,7 @@ import React from 'react';
 import Fuse from 'fuse.js';
 import Search from './components/Search';
 import Doctor from './components/Doctor';
-import Map from './components/Map';
+import Map from './components/MapClustered';
 import { debounce } from './utils/debounce';
 
 const GOOGLE_MAPS_API = 'AIzaSyAm578LcomZ5PDIkSz8GCwGdI-2UJX1OmE';
@@ -31,7 +31,8 @@ function App() {
   const [filtered, setFiltered] = React.useState(doctors);
 
   React.useEffect(() => {
-    debouncedSearch(setFiltered, search);
+    if (search) debouncedSearch(setFiltered, search);
+    else setFiltered(doctors);
   }, [search]);
 
   return (
