@@ -2,6 +2,7 @@ import React from 'react';
 import { GoogleMap, LoadScript, MarkerClusterer, Marker } from '@react-google-maps/api';
 import Portal from '../utils/Portal';
 import averageGeolocation from '../utils/average-geolocation';
+import { mapStyle } from './map-options';
 
 const Map = ({ list, apiKey }) => {
 
@@ -17,61 +18,9 @@ const Map = ({ list, apiKey }) => {
             height: "400px",
             width: "100%"
           }}
-          // options={
-          //   [
-          //     {
-          //       "featureType": "administrative.land_parcel",
-          //       "elementType": "labels",
-          //       "stylers": [
-          //         {
-          //           "visibility": "off"
-          //         }
-          //       ]
-          //     },
-          //     {
-          //       "featureType": "poi",
-          //       "elementType": "labels.text",
-          //       "stylers": [
-          //         {
-          //           "visibility": "off"
-          //         }
-          //       ]
-          //     },
-          //     {
-          //       "featureType": "poi.business",
-          //       "stylers": [
-          //         {
-          //           "visibility": "off"
-          //         }
-          //       ]
-          //     },
-          //     {
-          //       "featureType": "road",
-          //       "elementType": "labels.icon",
-          //       "stylers": [
-          //         {
-          //           "visibility": "off"
-          //         }
-          //       ]
-          //     },
-          //     {
-          //       "featureType": "road.local",
-          //       "elementType": "labels",
-          //       "stylers": [
-          //         {
-          //           "visibility": "off"
-          //         }
-          //       ]
-          //     },
-          //     {
-          //       "featureType": "transit",
-          //       "stylers": [
-          //         {
-          //           "visibility": "off"
-          //         }
-          //       ]
-          //     }
-          //   ]}
+          options={{
+            styles: mapStyle
+          }}
           zoom={4}
           center={center}
           onLoad={map => {
@@ -97,8 +46,20 @@ const Map = ({ list, apiKey }) => {
                 <Marker
                   key={element.slug}
                   position={{ lat: element.latitude, lng: element.longitude }}
-                  icon='https://nuu-group.sfo2.digitaloceanspaces.com/clients/augmenta/marker.png'
+                  icon={{
+                    url: 'https://nuu-group.sfo2.digitaloceanspaces.com/clients/augmenta/marker.png',
+                    labelOrigin: { x: 12, y: -10},
+                  }}
                   clusterer={clusterer}
+                  title={element.name}
+                  label={{
+                    background: '#fff',
+                    text: element.name,
+                    color: '#000',
+                    fontSize:'12px',
+                    fontWeight: "500",
+                    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;"
+                  }}
                 />
               ))
             }
